@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
+    "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
+    "cookie": "^1.0.1",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-openid-connect": "^2.17.1"
