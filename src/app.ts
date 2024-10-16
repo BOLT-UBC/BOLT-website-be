@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import { auth, requiresAuth } from "express-openid-connect";
-import { createClient } from "@supabase/supabase-js";
 
 import welcomeRoutes from "./routes/welcome";
 import profileRouter from "./routes/profile";
@@ -23,16 +22,11 @@ const config = {
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
-// Initialize Supabase client
-const supabaseUrl = process.env.SUPABASE_URL
-const supabaseKey = process.env.SUPABASE_ANON_KEY
-export const supabase = createClient(supabaseUrl as string, supabaseKey as string)
-
 app.get('/', (req, res) => {
   res.send("Hello, World!");
 });
 
-app.get('/welcome', welcomeRoutes);
-app.get('/profile', requiresAuth(), profileRouter);
+app.use('/welcome', welcomeRoutes);
+app.use('/profile', requiresAuth(), profileRouter);
 
 export default app;

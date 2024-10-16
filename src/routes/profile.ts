@@ -2,8 +2,8 @@ import { Router } from "express";
 
 const profileRouter = Router();
 
-profileRouter.get('/', (req, res) => {
-    res.json(req.oidc.user);
-})
+import { getProfile } from "../controllers/profile";
+
+profileRouter.get('/', getProfile);
 
 export default profileRouter;
