@@ -26,3 +26,27 @@ export const getProfile = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Failed to retrieve user profile." });
     }
 }
+
+export const deleteProfile = async (req: Request, res: Response) => {
+    try {
+        if (!req.oidc.user) {
+            throw new Error("User not authenticated");
+        }
+
+        const userId = req.oidc.user.sub;
+
+        console.log("User ID:", userId);
+
+        const { data, error } = await supabase
+            .from('users')
+            .delete()
+            .eq('auth0_user_id', userId)
+
+        if (error) throw error;
+
+        res.status(200).json(data);
+    } catch (error) {
+        console.error("Error deleting user profile:", error);
+        res.status(500).json({ error: "Failed to delete user profile." });
+    }
+}
